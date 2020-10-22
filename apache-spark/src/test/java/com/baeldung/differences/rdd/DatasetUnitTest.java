@@ -45,7 +45,6 @@ public class DatasetUnitTest {
         Dataset<TouristData> selectedData = typedDataset
             .filter((FilterFunction<TouristData>) record -> record.getCountry()
             .equals("Norway"));
-        selectedData.show();
 
         selectedData.foreach(record -> {
             assertEquals("Norway", record.getCountry());
@@ -56,7 +55,6 @@ public class DatasetUnitTest {
     public void whenGroupCountByCountry_thenContryTotalRecords() {
         Dataset<Row> countriesCount = typedDataset.groupBy(typedDataset.col("country"))
             .count();
-        countriesCount.show();
 
         assertEquals(Long.valueOf(220), Long.valueOf(countriesCount.count()));
     }
@@ -65,8 +63,7 @@ public class DatasetUnitTest {
     public void whenFilteredByPropertyRange_thenRetreiveValidRecords() {
         // Filter records with existing data for years between 2010 and 2017
         typedDataset.filter((FilterFunction<TouristData>) record -> record.getYear() != null 
-            && (Long.valueOf(record.getYear()) > 2010 && Long.valueOf(record.getYear()) < 2017))
-            .show();
+            && (Long.valueOf(record.getYear()) > 2010 && Long.valueOf(record.getYear()) < 2017));
     }
     
     @Test
@@ -76,8 +73,7 @@ public class DatasetUnitTest {
             && record.getSeries()
             .contains("expenditure"))
             .groupBy("country")
-            .agg(sum("value"))
-            .show();
+            .agg(sum("value"));
     }
 
 }

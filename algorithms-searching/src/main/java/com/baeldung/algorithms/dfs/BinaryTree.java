@@ -1,10 +1,15 @@
 package com.baeldung.algorithms.dfs;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
 public class BinaryTree {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BinaryTree.class);
 
     Node root;
 
@@ -136,7 +141,7 @@ public class BinaryTree {
 
             Node node = nodes.remove();
 
-            System.out.print(" " + node.value);
+            LOGGER.debug(" " + node.value);
 
             if (node.left != null) {
                 nodes.add(node.left);
@@ -210,7 +215,7 @@ public class BinaryTree {
     }    
     
     private void visit(int value) {
-        System.out.print(" " + value);        
+        LOGGER.debug(" " + value);
     }
     
     class Node {

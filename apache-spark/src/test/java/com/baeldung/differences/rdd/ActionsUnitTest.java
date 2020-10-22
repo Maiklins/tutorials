@@ -40,8 +40,7 @@ public class ActionsUnitTest {
         })
             .distinct();
         Long numberOfCountries = countries.count();
-        System.out.println("Count: " + numberOfCountries);
-        
+
         assertEquals(Long.valueOf(220), numberOfCountries);
     }
     
@@ -55,8 +54,7 @@ public class ActionsUnitTest {
         });
         List<Tuple2<String, Double>> totalByCountry = expenditurePairRdd.reduceByKey((x, y) -> x + y)
             .collect();
-        System.out.println("Total per Country: " + totalByCountry);
-        
+
         for(Tuple2<String, Double> tuple : totalByCountry) {
             if (tuple._1.equals("Mexico")) {
                 assertEquals(Double.valueOf(99164), tuple._2);

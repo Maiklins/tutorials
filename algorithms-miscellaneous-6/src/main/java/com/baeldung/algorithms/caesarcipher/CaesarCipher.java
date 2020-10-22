@@ -3,9 +3,13 @@ package com.baeldung.algorithms.caesarcipher;
 import org.apache.commons.math3.stat.inference.ChiSquareTest;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 public class CaesarCipher {
+
+    final Logger logger = Logger.getLogger(CaesarCipher.class.getName());
+
     private static final char LETTER_A = 'a';
     private static final char LETTER_Z = 'z';
     private static final int ALPHABET_SIZE = LETTER_Z - LETTER_A + 1;
@@ -72,7 +76,7 @@ public class CaesarCipher {
     private int probableOffset(double[] chiSquares) {
         int probableOffset = 0;
         for (int offset = 0; offset < chiSquares.length; offset++) {
-            System.out.println(String.format("Chi-Square for offset %d: %.2f", offset, chiSquares[offset]));
+            logger.finer(String.format("Chi-Square for offset %d: %.2f", offset, chiSquares[offset]));
             if (chiSquares[offset] < chiSquares[probableOffset]) {
                 probableOffset = offset;
             }

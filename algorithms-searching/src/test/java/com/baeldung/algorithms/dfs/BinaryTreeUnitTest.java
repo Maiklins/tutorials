@@ -87,7 +87,6 @@ public class BinaryTreeUnitTest {
         BinaryTree bt = createBinaryTree();
 
         bt.traverseInOrder(bt.root);
-        System.out.println();
         bt.traverseInOrderWithoutRecursion();
     }
 

@@ -2,20 +2,22 @@ package com.baeldung.algorithms.prim;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.junit.Test;
 
 public class PrimUnitTest {
 
+    final Logger logger = Logger.getLogger(PrimUnitTest.class.getName());
+
     @Test
     public void givenAGraph_whenPrimRuns_thenPrintMST() {
         Prim prim = new Prim(createGraph());
-        System.out.println(prim.originalGraphToString());
-        System.out.println("----------------");
+        logger.finer(prim.originalGraphToString());
+        logger.finer("----------------");
         prim.run();
-        System.out.println();
         prim.resetPrintHistory();
-        System.out.println(prim.minimumSpanningTreeToString());
+        logger.finer(prim.minimumSpanningTreeToString());
     }
 
     public static List<Vertex> createGraph() {

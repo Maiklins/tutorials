@@ -1,9 +1,9 @@
 package com.baeldung.apache.opennlp;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
+import java.util.logging.Logger;
+
 import opennlp.tools.langdetect.Language;
 import opennlp.tools.langdetect.LanguageDetector;
 import opennlp.tools.langdetect.LanguageDetectorFactory;
@@ -21,8 +21,13 @@ import org.junit.Test;
 
 public class LanguageDetectorAndTrainingDataUnitTest {
 
+    private static final Logger logger = Logger.getLogger(LanguageDetectorAndTrainingDataUnitTest.class.getName());
+
     @Test
-    public void givenLanguageDictionary_whenLanguageDetect_thenLanguageIsDetected() throws FileNotFoundException, IOException {
+    public void givenLanguageDictionary_whenLanguageDetect_thenLanguageIsDetected() throws IOException {
+
+        PrintStream originalSysOut = makeSureTheLibraryDoesNotPrintToSysOut();
+
         InputStreamFactory dataIn = new MarkableFileInputStreamFactory(new File("src/main/resources/models/DoccatSample.txt"));
         ObjectStream lineStream = new PlainTextByLineStream(dataIn, "UTF-8");
         LanguageDetectorSampleStream sampleStream = new LanguageDetectorSampleStream(lineStream);
@@ -33,12 +38,25 @@ public class LanguageDetectorAndTrainingDataUnitTest {
         params.put(TrainingParameters.ALGORITHM_PARAM, "NAIVEBAYES");
 
         LanguageDetectorModel model = LanguageDetectorME.train(sampleStream, params, new LanguageDetectorFactory());
-
         LanguageDetector ld = new LanguageDetectorME(model);
         Language[] languages = ld.predictLanguages("estava em uma marcenaria na Rua Bruno");
-        
+
+        resetSysOut(originalSysOut);
+
         assertThat(Arrays.asList(languages)).extracting("lang", "confidence").contains(tuple("pob", 0.9999999950605625),
                  tuple("ita", 4.939427661577956E-9), tuple("spa", 9.665954064665144E-15),
                 tuple("fra", 8.250349924885834E-25));
+    }
+
+    private PrintStream makeSureTheLibraryDoesNotPrintToSysOut() {
+        PrintStream original = System.out;
+        System.setOut(new PrintStream(new OutputStream() {
+            public void write(int b) {}
+        }));
+        return original;
+    }
+
+    private void resetSysOut(PrintStream out) {
+        System.setOut(out);
     }
 }

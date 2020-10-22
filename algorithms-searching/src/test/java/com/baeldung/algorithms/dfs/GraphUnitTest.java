@@ -2,16 +2,18 @@ package com.baeldung.algorithms.dfs;
 
 import java.util.List;
 
-import com.baeldung.algorithms.dfs.Graph;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GraphUnitTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GraphUnitTest.class);
 
     @Test
     public void givenDirectedGraph_whenDFS_thenPrintAllValues() {
         Graph graph = createDirectedGraph();
         graph.dfs(0);
-        System.out.println();
         graph.dfsWithoutRecursion(0);
     }
 
@@ -19,7 +21,7 @@ public class GraphUnitTest {
     public void givenDirectedGraph_whenGetTopologicalSort_thenPrintValuesSorted() {
         Graph graph = createDirectedGraph();
         List<Integer> list = graph.topologicalSort(0);
-        System.out.println(list);
+        LOGGER.debug(list.toString());
     }
 
     private Graph createDirectedGraph() {

@@ -39,8 +39,7 @@ public class DataFrameUnitTest {
     @Test
     public void whenSelectSpecificColumns_thenColumnsFiltered() {
         Dataset<Row> selectedData = data.select(col("country"), col("year"), col("value"));
-        selectedData.show();
-        
+
         List<String> resultList = Arrays.asList(selectedData.columns());
         assertTrue(resultList.contains("country"));
         assertTrue(resultList.contains("year"));
@@ -52,8 +51,7 @@ public class DataFrameUnitTest {
     @Test
     public void whenFilteringByCountry_thenCountryRecordsSelected() {
         Dataset<Row> filteredData = data.filter(col("country").equalTo("Mexico"));
-        filteredData.show();
-        
+
         filteredData.foreach(record -> {
             assertEquals("Mexico", record.get(1));
         });
@@ -64,8 +62,7 @@ public class DataFrameUnitTest {
     public void whenGroupCountByCountry_thenContryTotalRecords() {
         Dataset<Row> recordsPerCountry = data.groupBy(col("country"))
             .count();
-        recordsPerCountry.show();
-        
+
         Dataset<Row> filteredData = recordsPerCountry.filter(col("country").equalTo("Sweden"));
         assertEquals(new Long(12), filteredData.first()
             .get(1));
