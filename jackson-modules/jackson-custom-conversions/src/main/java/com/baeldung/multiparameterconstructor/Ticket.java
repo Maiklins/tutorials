@@ -21,14 +21,12 @@ public class Ticket {
         this.guest = guest;
         this.currency = currency;
         this.price = price;
-        System.out.println("2 arg Ticket constructor 1");
     }
 
     @JsonCreator
     public Ticket(Currency currency, int price) {
         this.price = price;
         this.currency = currency;
-        System.out.println("2 arg Ticket constructor 2");
     }
 
     public void setGuest(String guest) {
