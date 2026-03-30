@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Ticket {
 
-    @JsonProperty("eventName")
+    @JsonProperty(value = "event")
     private String eventName;
 
     private String guest;
